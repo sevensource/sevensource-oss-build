@@ -24,6 +24,22 @@
 		<sonar.jacoco.reportMissing.force.zero>true</sonar.jacoco.reportMissing.force.zero>
 	</properties>
 
+	<name>Parent POM for SevenSource OSS builds</name>
+	<description>Parent POM for SevenSource OSS builds</description>
+	<url>http://github.com/sevensource/sevensource-oss-build</url>
+	<licenses>
+		<license>
+	      <name>Apache License, Version 2.0</name>
+	      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+			<id>pgaschuetz</id>
+		</developer>
+	</developers>
+
 	<scm>
 		<connection>scm:git:git://github.com/sevensource/sevensource-oss-build.git</connection>
 		<developerConnection>scm:git:git@github.com:sevensource/sevensource-oss-build.git</developerConnection>
