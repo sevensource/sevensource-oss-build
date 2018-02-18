@@ -1,0 +1,299 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.sevensource.parents</groupId>
+	<artifactId>sevensource-oss-build</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+
+		<jacoco-maven-plugin.version>0.8.0</jacoco-maven-plugin.version>
+		<jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
+		<sonar-jacoco-listeners.version>5.1.1.13214</sonar-jacoco-listeners.version>
+		<sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
+
+		<jacoco.outputDir>${project.build.directory}</jacoco.outputDir>
+		<jacoco.out.ut.file>jacoco.exec</jacoco.out.ut.file>
+		<jacoco.out.it.file>jacoco-it.exec</jacoco.out.it.file>
+
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.jacoco.reportPaths>${jacoco.outputDir}/${jacoco.out.ut.file},${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.reportPaths>
+		<sonar.jacoco.reportMissing.force.zero>true</sonar.jacoco.reportMissing.force.zero>
+	</properties>
+
+	<scm>
+		<connection>scm:git:git://github.com/sevensource/sevensource-oss-build.git</connection>
+		<developerConnection>scm:git:git@github.com:sevensource/sevensource-oss-build.git</developerConnection>
+		<url>http://github.com/sevensource/sevensource-oss-build/tree/master</url>
+	</scm>
+	
+	<repositories>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/releases/</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>ossrh-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<releases><enabled>false</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
+	</repositories>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<organization>
+		<name>SevenSource, pgaschuetz</name>
+		<url>http://www.github.com/sevensource</url>
+	</organization>
+
+	<dependencies>
+		<dependency>
+		    <groupId>org.sonarsource.java</groupId>
+		    <artifactId>sonar-jacoco-listeners</artifactId>
+		    <version>${sonar-jacoco-listeners.version}</version>
+		    <scope>test</scope>
+		</dependency>
+  </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.7.0</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco-maven-plugin.version}</version>
+					<executions>
+						<execution>
+							<id>prepare-ut-agent</id>
+							<phase>process-test-classes</phase>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+							<configuration>
+									<destFile>${jacoco.outputDir}/${jacoco.out.ut.file}</destFile>
+									<propertyName>jacoco.agent.ut.arg</propertyName>
+									<append>true</append>
+							</configuration>
+						</execution>
+
+						<execution>
+							<id>prepare-it-agent</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+							<configuration>
+									<destFile>${jacoco.outputDir}/${jacoco.out.it.file}</destFile>
+									<propertyName>jacoco.agent.it.arg</propertyName>
+									<append>true</append>
+							</configuration>
+						</execution>
+
+						<execution>
+							<id>process-unit-test</id>
+							<phase>test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+							<configuration>
+								<dataFile>${jacoco.outputDir}/${jacoco.out.ut.file}</dataFile>
+								<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+							</configuration>
+						</execution>
+
+						<execution>
+							<id>process-int-test</id>
+							<phase>post-integration-test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+							<configuration>
+								<dataFile>${jacoco.outputDir}/${jacoco.out.it.file}</dataFile>
+								<outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.20.1</version>
+					<configuration>
+						<argLine>${jacoco.agent.ut.arg}</argLine>
+						<properties>
+							<property>
+								<name>listener</name>
+								<value>org.sonar.java.jacoco.JUnitListener</value>
+							</property>
+						</properties>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.20.1</version>
+					<executions>
+						<execution>
+							<id>integration-tests</id>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+							<configuration>
+								<argLine>${jacoco.agent.it.arg}</argLine>
+								<properties>
+									<property>
+										<name>listener</name>
+										<value>org.sonar.java.jacoco.JUnitListener</value>
+									</property>
+								</properties>
+								<reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+				    <groupId>org.sonarsource.scanner.maven</groupId>
+				    <artifactId>sonar-maven-plugin</artifactId>
+				    <version>${sonar-maven-plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<configuration>
+						<skip>true</skip>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>external.atlassian.jgitflow</groupId>
+					<artifactId>jgitflow-maven-plugin</artifactId>
+					<version>${jgitflow-maven-plugin.version}</version>
+					<configuration>
+						<arguments>-Dmaven.install.skip=true</arguments>
+						<flowInitContext>
+							<versionTagPrefix>v</versionTagPrefix>
+						</flowInitContext>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<enableSshAgent>true</enableSshAgent>
+						<noDeploy>true</noDeploy>
+						<pushReleases>true</pushReleases>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.0.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.0.0</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>1.6.8</version>
+					<executions>
+						<execution>
+							<id>default-deploy</id>
+							<phase>deploy</phase>
+							<goals>
+								<goal>deploy</goal>
+							</goals>
+						</execution>
+					</executions>
+					<extensions>true</extensions>
+					<configuration>
+						<serverId>ossrh</serverId>
+						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
