@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sevensource.parents</groupId>
 	<artifactId>sevensource-oss-build</artifactId>
-	<version>1.0.0</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -23,6 +23,22 @@
 		<sonar.jacoco.reportPaths>${jacoco.outputDir}/${jacoco.out.ut.file},${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.reportPaths>
 		<sonar.jacoco.reportMissing.force.zero>true</sonar.jacoco.reportMissing.force.zero>
 	</properties>
+
+	<name>Parent POM for SevenSource OSS builds</name>
+	<description>Parent POM for SevenSource OSS builds</description>
+	<url>http://github.com/sevensource/sevensource-oss-build</url>
+	<licenses>
+		<license>
+	      <name>Apache License, Version 2.0</name>
+	      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+			<id>pgaschuetz</id>
+		</developer>
+	</developers>
 
 	<scm>
 		<connection>scm:git:git://github.com/sevensource/sevensource-oss-build.git</connection>
