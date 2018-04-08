@@ -81,7 +81,7 @@
 		    <version>${sonar-jacoco-listeners.version}</version>
 		    <scope>test</scope>
 		</dependency>
-  </dependencies>
+  	</dependencies>
 
 	<build>
 		<plugins>
@@ -228,7 +228,20 @@
 						<skip>true</skip>
 					</configuration>
 				</plugin>
+				
+				<plugin>
+					<groupId>com.amashchenko.maven.plugin</groupId>
+					<artifactId>gitflow-maven-plugin</artifactId>
+					<version>1.9.0</version>
+					<configuration>
+						<installProject>false</installProject>
+						<gitFlowConfig>
+							<versionTagPrefix>v</versionTagPrefix>
+						</gitFlowConfig>
+					</configuration>
+				</plugin>
 
+<!-- 
 				<plugin>
 					<groupId>external.atlassian.jgitflow</groupId>
 					<artifactId>jgitflow-maven-plugin</artifactId>
@@ -244,6 +257,7 @@
 						<pushReleases>true</pushReleases>
 					</configuration>
 				</plugin>
+ -->
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
