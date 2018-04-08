@@ -235,6 +235,8 @@
 					<version>1.9.0</version>
 					<configuration>
 						<installProject>false</installProject>
+						<fetchRemote>true</fetchRemote>
+						<pushRemote>true</pushRemote>
 						<gitFlowConfig>
 							<versionTagPrefix>v</versionTagPrefix>
 						</gitFlowConfig>
