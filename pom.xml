@@ -243,24 +243,6 @@
 					</configuration>
 				</plugin>
 
-<!-- 
-				<plugin>
-					<groupId>external.atlassian.jgitflow</groupId>
-					<artifactId>jgitflow-maven-plugin</artifactId>
-					<version>${jgitflow-maven-plugin.version}</version>
-					<configuration>
-						<arguments>-Dmaven.install.skip=true</arguments>
-						<flowInitContext>
-							<versionTagPrefix>v</versionTagPrefix>
-						</flowInitContext>
-						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<enableSshAgent>true</enableSshAgent>
-						<noDeploy>true</noDeploy>
-						<pushReleases>true</pushReleases>
-					</configuration>
-				</plugin>
- -->
-
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
