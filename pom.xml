@@ -236,7 +236,7 @@
 					<artifactId>gitflow-maven-plugin</artifactId>
 					<version>1.10.0</version>
 					<configuration>
-						<verbose>true</verbose>
+						<verbose>false</verbose>
 						<installProject>false</installProject>
 						<fetchRemote>true</fetchRemote>
 						<pushRemote>true</pushRemote>
