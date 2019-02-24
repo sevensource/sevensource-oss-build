@@ -10,9 +10,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
-		<sonar-jacoco-listeners.version>5.8.0.15699</sonar-jacoco-listeners.version>
-		<sonar-maven-plugin.version>3.5.0.1254</sonar-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
+		<sonar-jacoco-listeners.version>5.11.0.17289</sonar-jacoco-listeners.version>
+		<sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
 
 		<jacoco.outputDir>${project.build.directory}</jacoco.outputDir>
 		<jacoco.out.ut.file>jacoco-ut.exec</jacoco.out.ut.file>
@@ -234,7 +234,7 @@
 				<plugin>
 					<groupId>com.amashchenko.maven.plugin</groupId>
 					<artifactId>gitflow-maven-plugin</artifactId>
-					<version>1.10.0</version>
+					<version>1.11.0</version>
 					<configuration>
 						<verbose>false</verbose>
 						<installProject>false</installProject>
@@ -313,7 +313,7 @@
 				
 		       <plugin>
 		          <artifactId>maven-assembly-plugin</artifactId>
-		          <version>3.1.0</version>
+		          <version>3.1.1</version>
 		          <configuration>
 		            <recompressZippedFiles>false</recompressZippedFiles>
 		          </configuration>
